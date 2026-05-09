@@ -1,3 +1,7 @@
 qemu-5.2.0/
 qemu-5.2.0.tar.xz
 实验0：配置环境.txt
+
+# Rust 编译产物
+target/
+**/target/
