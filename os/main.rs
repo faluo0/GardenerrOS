@@ -1,5 +1,0 @@
-#[no_mangle]
-extern "C" fn _start() {
-    loop{};
-}
-
