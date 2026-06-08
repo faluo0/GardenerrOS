@@ -15,20 +15,9 @@ pub mod console;
 mod syscall;
 mod lang_items;
 
-fn clear_bss() {
-    extern "C" {
-        fn start_bss();
-        fn end_bss();
-    }
-    let start_bss_ptr = start_bss as *const () as usize;
-    let end_bss_ptr = end_bss as *const () as usize;
-    (start_bss_ptr..end_bss_ptr).for_each(|a| unsafe { (a as *mut u8).write_volatile(0) });
-}
-
 #[no_mangle]
 #[link_section = ".text.entry"]
 pub extern "C" fn _start() -> ! {
-    clear_bss();
     exit(main());
     panic!("unreachable after sys_exit!");
 }
