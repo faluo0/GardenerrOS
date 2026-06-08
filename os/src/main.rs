@@ -12,8 +12,12 @@ mod trap;
 mod loader;
 mod config;
 mod task;
-
+extern crate alloc;
 mod timer;
+#![feature(alloc_error_handler)]
+mod mm;
+
+mm::init();
 
 global_asm!(include_str!("entry.asm"));
 global_asm!(include_str!("link_app.S"));
