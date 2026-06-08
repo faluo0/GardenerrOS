@@ -17,3 +17,5 @@ panic = "abort"
 
 [profile.dev]
 panic = "abort"
+
+xmas-elf = "0.7.0"
