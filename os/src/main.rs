@@ -17,7 +17,7 @@ mod config;
 mod task;
 mod timer;
 mod mm;
-
+mod sync;
 extern crate bitflags;
 
 global_asm!(include_str!("entry.asm"));
