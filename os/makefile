@@ -48,6 +48,7 @@ run: build
 	@qemu-system-riscv64 \
 		-machine virt \
 		-nographic \
+		-serial mon:stdio \
 		-bios $(BOOTLOADER) \
 		-device loader,file=$(KERNEL_BIN),addr=$(KERNEL_ENTRY_PA)
 

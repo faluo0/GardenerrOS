@@ -135,6 +135,7 @@ impl TaskControlBlock {
         task_control_block
         // ---- release parent PCB automatically
         // **** release children PCB automatically
+    }
 
     pub fn exec(&self, elf_data: &[u8]) {
         // memory_set with elf program headers/trampoline/trap context/user stack
@@ -160,7 +161,7 @@ impl TaskControlBlock {
             trap_handler as usize,
         );
         // **** release inner automatically
-
+    }
 
 
     pub fn getpid(&self) -> usize {

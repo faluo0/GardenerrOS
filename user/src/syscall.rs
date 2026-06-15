@@ -63,39 +63,3 @@ pub fn sys_waitpid(pid: isize, exit_code: *mut i32) -> isize {
     syscall(SYSCALL_WAITPID, [pid as usize, exit_code as usize, 0])
 }
 
-接着，在user/src/lib.rs封装系统调用为应用程序使用的形式。
-
-//user/src/lib.rs
-
-pub fn read(fd: usize, buf: &mut [u8]) -> isize { sys_read(fd, buf) }
-
-pub fn getpid() -> isize { sys_getpid() }
-pub fn fork() -> isize { sys_fork() }
-pub fn exec(path: &str) -> isize { sys_exec(path) }
-pub fn wait(exit_code: &mut i32) -> isize {
-    loop {
-        match sys_waitpid(-1, exit_code as *mut _) {
-            -2 => { yield_(); }
-            // -1 or a real pid
-            exit_pid => return exit_pid,
-        }
-    }
-}
-
-pub fn waitpid(pid: usize, exit_code: &mut i32) -> isize {
-    loop {
-        match sys_waitpid(pid as isize, exit_code as *mut _) {
-            -2 => { yield_(); }
-            // -1 or a real pid
-            exit_pid => return exit_pid,
-        }
-    }
-}
-
-pub fn sleep(period_ms: usize) {
-    let start = sys_get_time();
-    while sys_get_time() < start + period_ms as isize {
-        sys_yield();
-    }
-}
-

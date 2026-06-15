@@ -4,11 +4,13 @@ mod address;
 mod frame_allocator;
 mod memory_set;
 
-use address::{VPNRange, StepByOne};
-pub use address::{PhysAddr, VirtAddr, PhysPageNum, VirtPageNum};
+pub use address::{PhysAddr, VirtAddr, PhysPageNum, VirtPageNum, VPNRange, StepByOne};
 pub use frame_allocator::{FrameTracker, frame_alloc};
-pub use page_table::{PageTable, PageTableEntry, PTEFlags, translated_byte_buffer};
-pub use memory_set::{MemorySet, KERNEL_SPACE, MapPermission};
+pub use page_table::{
+    PageTable, PageTableEntry, PTEFlags,
+    translated_byte_buffer, translated_str, translated_refmut,
+};
+pub use memory_set::{MemorySet, KERNEL_SPACE, MapPermission, MapArea, MapType};
 pub use memory_set::remap_test;
 
 pub fn init() {
@@ -16,10 +18,3 @@ pub fn init() {
     frame_allocator::init_frame_allocator();
     KERNEL_SPACE.exclusive_access().activate();
 }
-
-pub use page_table::{
-    PageTableEntry,
-    translated_byte_buffer,
-    translated_str,
-    translated_refmut,
-};
